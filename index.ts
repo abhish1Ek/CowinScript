@@ -26,7 +26,7 @@ const VACCINE_REGEX = /COVAXIN/i;
 const url =
   "https://cdn-api.co-vin.in/api/v2/appointment/sessions/calendarByPin";
 
-const authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiI2MWQ4ZWUyOS0xMGNlLTRjYTMtOTA3NS1jYWE0ZGNlMTQ3NTciLCJ1c2VyX2lkIjoiNjFkOGVlMjktMTBjZS00Y2EzLTkwNzUtY2FhNGRjZTE0NzU3IiwidXNlcl90eXBlIjoiQkVORUZJQ0lBUlkiLCJtb2JpbGVfbnVtYmVyIjo5NzE2NjU4MDM0LCJiZW5lZmljaWFyeV9yZWZlcmVuY2VfaWQiOjUzNDAyOTExNTU0NjkwLCJ1YSI6Ik1vemlsbGEvNS4wIChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDExXzJfMykgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzg4LjAuNDMyNC4xODIgU2FmYXJpLzUzNy4zNiBFZGcvODguMC43MDUuNzQiLCJkYXRlX21vZGlmaWVkIjoiMjAyMS0wNS0wNFQxNDo0NDoxMS4xMTZaIiwiaWF0IjoxNjIwMTM5NDUxLCJleHAiOjE2MjAxNDAzNTF9.RPkvsklUE_fNZq-Ckb41L0Qj6lIGrFjAVvMpo0tEXGw`;
+const authorization = `Bearer token here`;
 console.log(pincodeList[0].PINCODE, " ", pincodeList.length);
 
 const isAvailable = (session: Session) =>
