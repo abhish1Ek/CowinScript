@@ -10,7 +10,7 @@ axiosRetry(axios, {
 });
 import { Data, Session } from "./types";
 
-const pincodeList = require("./faridabad.json");
+const pincodeList = require("./delhi.json");
 const date = "05-05-2021";
 const MIN_AGE = 18;
 
