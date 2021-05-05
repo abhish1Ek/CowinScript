@@ -10,8 +10,10 @@ axiosRetry(axios, {
 });
 import { Data, Session } from "./types";
 
-const pincodeList = require("./delhi.json");
+const pincodeList = require("./faridabad.json");
 const date = "05-05-2021";
+const MIN_AGE = 18;
+
 // Make a GET request
 
 const wait = (num: number) =>
@@ -24,13 +26,13 @@ const wait = (num: number) =>
 const VACCINE_REGEX = /COVAXIN/i;
 
 const url =
-  "https://cdn-api.co-vin.in/api/v2/appointment/sessions/calendarByPin";
+  "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin";
 
-const authorization = `Bearer token here`;
+// const authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiI2MWQ4ZWUyOS0xMGNlLTRjYTMtOTA3NS1jYWE0ZGNlMTQ3NTciLCJ1c2VyX2lkIjoiNjFkOGVlMjktMTBjZS00Y2EzLTkwNzUtY2FhNGRjZTE0NzU3IiwidXNlcl90eXBlIjoiQkVORUZJQ0lBUlkiLCJtb2JpbGVfbnVtYmVyIjo5NzE2NjU4MDM0LCJiZW5lZmljaWFyeV9yZWZlcmVuY2VfaWQiOjUzNDAyOTExNTU0NjkwLCJ1YSI6Ik1vemlsbGEvNS4wIChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDExXzJfMykgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzg4LjAuNDMyNC4xODIgU2FmYXJpLzUzNy4zNiBFZGcvODguMC43MDUuNzQiLCJkYXRlX21vZGlmaWVkIjoiMjAyMS0wNS0wNVQwNjo1MjoxMy40MThaIiwiaWF0IjoxNjIwMTk3NTMzLCJleHAiOjE2MjAxOTg0MzN9.7ZZ7A3EpRlpwyIrisDAGjhhdpBauyRngwhtQqpmeqU4`;
 console.log(pincodeList[0].PINCODE, " ", pincodeList.length);
 
 const isAvailable = (session: Session) =>
-  session?.available_capacity > 0 && session?.min_age_limit < 20;
+  session?.available_capacity > 0 && session?.min_age_limit === MIN_AGE;
 
 const eighteenPlusAndCovaxin = [];
 const eigteenPlusAndAvailable = [];
@@ -55,7 +57,7 @@ const checkVaccine = async () => {
         url: parammedUrl,
         method: "get",
         headers: {
-          authorization: authorization,
+          // authorization: authorization,
           "sec-fetch-mode": "cors",
           "sec-fetch-site": "cross-site",
         },
