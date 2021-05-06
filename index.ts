@@ -1,5 +1,15 @@
 import axios from "axios";
 const axiosRetry = require("axios-retry");
+const arg = require("arg");
+
+const args = arg({
+  "--public": Boolean,
+
+  "-p": "--public",
+});
+
+const isPublic = !!args["--public"];
+
 axiosRetry(axios, {
   retries: 3,
   // retryCondition: (error) => {
@@ -10,8 +20,8 @@ axiosRetry(axios, {
 });
 import { Data, Session } from "./types";
 
-const pincodeList = require("./delhi.json");
-const date = "05-05-2021";
+const pincodeList = require("./faridabad.json");
+const date = "06-05-2021";
 const MIN_AGE = 18;
 
 // Make a GET request
@@ -24,11 +34,14 @@ const wait = (num: number) =>
   });
 
 const VACCINE_REGEX = /COVAXIN/i;
-
-const url =
+const urlAuth =
+  "https://cdn-api.co-vin.in/api/v2/appointment/sessions/calendarByPin";
+const urlPublic =
   "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin";
 
-// const authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiI2MWQ4ZWUyOS0xMGNlLTRjYTMtOTA3NS1jYWE0ZGNlMTQ3NTciLCJ1c2VyX2lkIjoiNjFkOGVlMjktMTBjZS00Y2EzLTkwNzUtY2FhNGRjZTE0NzU3IiwidXNlcl90eXBlIjoiQkVORUZJQ0lBUlkiLCJtb2JpbGVfbnVtYmVyIjo5NzE2NjU4MDM0LCJiZW5lZmljaWFyeV9yZWZlcmVuY2VfaWQiOjUzNDAyOTExNTU0NjkwLCJ1YSI6Ik1vemlsbGEvNS4wIChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDExXzJfMykgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzg4LjAuNDMyNC4xODIgU2FmYXJpLzUzNy4zNiBFZGcvODguMC43MDUuNzQiLCJkYXRlX21vZGlmaWVkIjoiMjAyMS0wNS0wNVQwNjo1MjoxMy40MThaIiwiaWF0IjoxNjIwMTk3NTMzLCJleHAiOjE2MjAxOTg0MzN9.7ZZ7A3EpRlpwyIrisDAGjhhdpBauyRngwhtQqpmeqU4`;
+const url = isPublic ? urlPublic : urlAuth;
+
+const authorization = `Bearer`;
 console.log(pincodeList[0].PINCODE, " ", pincodeList.length);
 
 const isAvailable = (session: Session) =>
@@ -57,10 +70,17 @@ const checkVaccine = async () => {
         url: parammedUrl,
         method: "get",
         headers: {
-          // authorization: authorization,
+          accept: "application/json, text/plain, */*",
+          "accept-language": "en-IN,en-GB;q=0.9,en;q=0.8,en-US;q=0.7",
+          ...(isPublic ? { authorization: authorization } : null),
+          "if-none-match": 'W/"a43-OPT6iwVuLW/diUPboHpsJKN9aqI"',
+          "sec-fetch-dest": "empty",
           "sec-fetch-mode": "cors",
           "sec-fetch-site": "cross-site",
+          "User-Agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36",
         },
+        withCredentials: true,
       });
 
       const data: Data = response.data;
