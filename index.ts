@@ -1,4 +1,5 @@
 import axios from "axios";
+import config from "./config";
 const axiosRetry = require("axios-retry");
 const arg = require("arg");
 
@@ -41,7 +42,7 @@ const urlPublic =
 
 const url = isPublic ? urlPublic : urlAuth;
 
-const authorization = `Bearer`;
+const authorization = config.token;
 console.log(pincodeList[0].PINCODE, " ", pincodeList.length);
 
 const isAvailable = (session: Session) =>
